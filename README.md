@@ -1,4 +1,4 @@
-# globat_challenge
+# globant_challenge
 
 To run this api you need to install Docker and build an image with the project.
 
