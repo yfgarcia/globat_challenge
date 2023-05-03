@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime, text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from db import DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
-
+from queries import DATA_Q
 
 # Declare the Base class for creating declarative entities
 Base = declarative_base()
@@ -37,6 +37,25 @@ Session = sessionmaker(bind=engine)
 # Create the flaskk app
 app = Flask(__name__)
 
+#Create end point part 2 of the challenge
+@app.route('/data_q', methods=['GET'])
+def get_data_q():
+    query_data = text(DATA_Q)
+    session = Session()
+    query = session.execute(query_data)
+    session.close() # Close the session
+    
+    query_restult = [] # Set the result like a json response
+    for i in query:
+        query_restult.append({
+            'department': i[0],
+            'job': i[1],
+            'Q1': i[2],
+            'Q2': i[3],
+            'Q3': i[4],
+            'Q4': i[5]
+        })
+    return query_restult
 
 #endpont of firts part
 @app.route('/upload', methods=['POST'])
