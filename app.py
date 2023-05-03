@@ -3,7 +3,7 @@ from sqlalchemy import create_engine, Column, Integer, String, DateTime, text
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 from db import DB_HOST, DB_NAME, DB_PASSWORD, DB_PORT, DB_USER
-from queries import DATA_Q
+from queries import DATA_Q, LIST_ID
 
 # Declare the Base class for creating declarative entities
 Base = declarative_base()
@@ -56,6 +56,25 @@ def get_data_q():
             'Q4': i[5]
         })
     return query_restult
+
+
+#Create end point part 2 of the challenge
+@app.route('/list_id', methods=['GET'])
+def get_list_d():
+    query_data = text(LIST_ID)
+    session = Session()
+    query = session.execute(query_data)
+    session.close() # Close the session
+    
+    query_result = [] # Set the result like a json response
+    for i in query:
+        query_result.append({
+            'id': i[0],
+            'department': i[1],
+            'hired': i[2]
+        })
+
+    return query_result
 
 #endpont of firts part
 @app.route('/upload', methods=['POST'])
