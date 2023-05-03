@@ -71,3 +71,16 @@ DATA_Q = """
 		left join qry4 on qry1.department_id = qry4.department_id and qry1.job_id = qry4.job_id
 		order by 1,2
 """
+
+LIST_ID = """
+	select 
+		he.department_id,
+		d.department,
+		count(he.id) as hired
+	from public.hired_employees he 
+	join public.departments d on HE.department_id = d.id 
+	join public.jobs j on he.job_id = j.id  
+	where substring(he.datetime,1,4) = '2021'
+	group by 1,2
+	order by 3 desc
+"""
