@@ -1,1 +1,1 @@
-# globat_challenge
+# globant_challenge
